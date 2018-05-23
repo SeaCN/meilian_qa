@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qhw.wechat.dao.IFeedbackDao">
+	<insert id="addFeedback" parameterType="qhw.wechat.entity.meilian.FeedbackBean">
+		INSERT INTO meilian_feedback(
+		content,
+		suggestionid,
+		userid
+		)
+		VALUES(
+		#{content},
+		#{suggestionid},
+		#{userid}
+		)
+	</insert>
+
+	<select id="selectAll" resultType="qhw.wechat.entity.meilian.FeedbackBean">
+		SELECT * FROM meilian_feedback
+	</select>
+
+	<!-- 查询个人提交的所有建议 -->
+	<select id="selectByUserid" parameterType="_int" resultType="qhw.wechat.entity.meilian.FeedbackBean">
+		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content,f.createTime FROM meilian_suggestion s 
+		LEFT JOIN meilian_feedback f ON s.id=f.suggestionid 
+		LEFT JOIN meilian_user u ON s.userid=u.id
+		WHERE f.userid=#{userid}
+		ORDER BY f.createTime DESC;
+	</select>
+
+</mapper>

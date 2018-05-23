@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qhw.wechat.dao.IUserDao">
+	<insert id="addUser" parameterType="qhw.wechat.entity.meilian.UserBean" >
+		INSERT INTO meilian_user( 
+			<trim suffix="" suffixOverrides=",">
+				openid,
+				nickname,
+				<if test="phone!=null">phone,</if>
+				<if test="wechat_account!=null">wechat_account,</if>
+				<if test="wechat_nickname!=null">wechat_nickname,</if>
+				<if test="wechat_sex!=null">wechat_sex,</if>
+				<if test="wechat_country!=null">wechat_country,</if>
+				<if test="wechat_province!=null">wechat_province,</if>
+				<if test="wechat_city!=null">wechat_city,</if>
+				<if test="wechat_headimgurl!=null">wechat_headimgurl,</if>
+				<if test="wechat_privilege!=null">wechat_privilege,</if>
+				<if test="wechat_unionid!=null">wechat_unionid,</if>
+				<if test="createTime!=null">createTime,</if>
+				<if test="updateTime!=null">updateTime</if>
+			</trim>
+		)
+		VALUES(
+			<trim suffix="" suffixOverrides=",">
+				#{openid},
+				#{nickname},
+				<if test="phone!=null">#{phone},</if>
+				<if test="wechat_account!=null">#{wechat_account},</if>
+				<if test="wechat_nickname!=null">#{wechat_nickname},</if>
+				<if test="wechat_sex!=null">#{wechat_sex},</if>
+				<if test="wechat_country!=null">#{wechat_country},</if>
+				<if test="wechat_province!=null">#{wechat_province},</if>
+				<if test="wechat_city!=null">#{wechat_city},</if>
+				<if test="wechat_headimgurl!=null">#{wechat_headimgurl},</if>
+				<if test="wechat_privilege!=null">#{wechat_privilege},</if>
+				<if test="wechat_unionid!=null">#{wechat_unionid},</if>
+				<if test="createTime!=null">#{createTime},</if>
+				<if test="updateTime!=null">#{updateTime}</if>
+			</trim>
+		)
+	</insert>
+	
+	<select id="selectById" parameterType="_int" resultType="qhw.wechat.entity.meilian.UserBean">
+		SELECT * FROM meilian_user
+		WHERE id=#{id}
+	</select>
+	
+	<select id="selectByOpenid" parameterType="string" resultType="qhw.wechat.entity.meilian.UserBean">
+		SELECT * FROM meilian_user
+		WHERE openid=#{openid}
+	</select>
+	
+	<update id="updateUser" parameterType="qhw.wechat.entity.meilian.UserBean">
+		UPDATE meilian_user
+		SET 
+		<trim suffix="" suffixOverrides=",">
+			<if test="phone!=null">phone=#{phone},</if>
+			<if test="wechat_account!=null">wechat_account=#{wechat_account},</if>
+			<if test="wechat_nickname!=null">wechat_nickname=#{wechat_nickname},</if>
+			<if test="wechat_sex!=null">wechat_sex=#{wechat_sex},</if>
+			<if test="wechat_country!=null">wechat_country=#{wechat_country},</if>
+			<if test="wechat_province!=null">wechat_province=#{wechat_province},</if>
+			<if test="wechat_city!=null">wechat_city=#{wechat_city},</if>
+			<if test="wechat_headimgurl!=null">wechat_headimgurl=#{wechat_headimgurl},</if>
+			<if test="wechat_privilege!=null">wechat_privilege=#{wechat_privilege},</if>
+			<if test="wechat_unionid!=null">wechat_unionid=#{wechat_unionid},</if>
+			<if test="updateTime!=null">updateTime=#{updateTime}</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+</mapper>

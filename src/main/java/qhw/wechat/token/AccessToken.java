@@ -92,6 +92,5 @@ public class AccessToken {
 				return null;
 			}
 		}
-	
 	}
 }

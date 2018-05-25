@@ -4,7 +4,7 @@ public class SuggestionBean extends BaseBean {
 	private String title;
 	private String content;
 	private Integer userid;
-	private Integer isFeedback;
+	private Integer isFeedback = 0;
 	private String img;
 	public String getImg() {
 		return img;

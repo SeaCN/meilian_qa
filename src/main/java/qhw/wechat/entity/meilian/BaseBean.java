@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class BaseBean {
 	private Integer id;
-	private Date createTime;
+	private Date createTime = new Date();
 	public Integer getId() {
 		return id;
 	}

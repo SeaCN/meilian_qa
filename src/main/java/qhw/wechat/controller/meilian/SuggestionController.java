@@ -40,6 +40,7 @@ public class SuggestionController {
 	@ResponseBody
 	public Result addSuggestion(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody SuggestionBean suggestion){
+		logger.info("add a suggestion...");
 		if (suggestion.getUserid() == null) {
 			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR);
 		}
@@ -140,6 +141,7 @@ public class SuggestionController {
 	@ResponseBody
 	public Result selectById(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam Integer id){
+		logger.info("select suggestion according to userid...");
 		SuggestionBean suggestion = null;
 		try {
 			suggestion = this.suggestionService.selectById(id);
@@ -169,11 +171,11 @@ public class SuggestionController {
 	public Result selectByPage(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(defaultValue="1") Integer currentPage,
 			@RequestParam(defaultValue="10") Integer pageSize,
-			@RequestParam(required=false) String nickname, 
 			@RequestParam(required=false) String title,
 			@RequestParam(required=false) String content,
 			@RequestParam(required=false) Date startDate,
 			@RequestParam(required=false) Date endDate){
+		logger.info("select suggestions which have no feedback...");
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("title", title);
 		params.put("content", content);

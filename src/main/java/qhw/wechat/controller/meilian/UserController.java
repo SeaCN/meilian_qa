@@ -42,7 +42,6 @@ public class UserController {
 		try {
 			effect = userService.addUser(user);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			logger.info("occur error when regist()", e);
 			result.put(MessageConst.MSG_CODE, MessageConst.MSG_FAIL_STATUS);
 			result.put(MessageConst.MSG_MESSAGE, MessageConst.MSG_ERROR);

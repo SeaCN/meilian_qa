@@ -18,19 +18,12 @@
        http://www.springframework.org/schema/util 
        http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<!-- 自动扫描且只扫描@Controller -->
-	<context:component-scan base-package="qhw.wechat.controller"
-		use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
 	<context:component-scan base-package="qhw.wechat.service.impl" />
 
 	<bean id="propertyConfigurer" class="qhw.wechat.util.PropertyPlaceholder">
 		<property name="ignoreResourceNotFound" value="false" />
 		<property name="locations">
 			<list>
-				<!-- <value>classpath:${env}/db.properties</value> -->
 				<value>classpath:/qhw/wechat/token/token.properties</value>
 				<value>classpath:db.properties</value>
 			</list>

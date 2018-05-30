@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qhw.wechat.dao.ISuggestionDao">
+	<insert id="addSugg" parameterType="qhw.wechat.entity.meilian.SuggestionBean">
+		INSERT INTO meilian_suggestion(
+		title,
+		content,
+		img,
+		userid,
+		createTime,
+		isFeedback
+		)
+		VALUES(
+		#{title},
+		#{content},
+		#{img},
+		#{userid},
+		#{createTime},
+		#{isFeedback}
+		)
+	</insert>
+	
+	<update id="updateSugg" parameterType="qhw.wechat.entity.meilian.SuggestionBean">
+		UPDATE meilian_suggestion
+		SET isFeedback = #{isFeedback}
+		WHERE id= #{id}
+	</update>
+	
+	<!-- 查询符合条件的建议总数 -->
+	<select id="selectTotolNum" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(1) FROM meilian_suggestion 
+		WHERE isFeedback= 0
+		<if test="title != null"> AND title LIKE CONCAT('%', #{title}, '%')</if>
+		<if test="content != null"> AND content LIKE CONCAT('%', #{content}, '%')</if>
+		<if test="startDate != null"> AND createTime $gt;= #{startDate}</if>
+		<if test="title != endDate"> AND createTime $lt;= #{endDate}</if>
+	</select>
+	
+	<!-- 查询未回复的建议 (分页)-->
+	<select id="selectByPage" parameterType="hashmap" resultType="qhw.wechat.entity.meilian.SuggestionBean">
+		SELECT * FROM meilian_suggestion 
+		WHERE isFeedback= 0
+		<if test="title != null"> AND title LIKE CONCAT('%', #{title}, '%')</if>
+		<if test="content != null"> AND content LIKE CONCAT('%', #{content}, '%')</if>
+		<if test="startDate != null"> AND createTime $gt;= #{startDate}</if>
+		<if test="title != endDate"> AND createTime $lt;= #{endDate}</if>
+		ORDER BY createTime DESC
+		LIMIT #{startNum}, #{pageSize}
+	</select>
+
+	<!-- 查询个人提交的所有建议 -->
+	<select id="selectByUserid" parameterType="_int" resultType="qhw.wechat.entity.meilian.SuggestionBean">
+		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content,f.createTime FROM meilian_suggestion s 
+		LEFT JOIN meilian_feedback f ON s.id=f.suggestionid 
+		LEFT JOIN meilian_user u ON s.userid=u.id
+		WHERE f.userid=#{userid}
+		ORDER BY f.createTime DESC;
+	</select>
+
+</mapper>

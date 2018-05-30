@@ -19,7 +19,7 @@
 		SELECT * FROM meilian_feedback
 	</select>
 
-	<!-- 查询个人提交的所有建议 -->
+	<!-- 分页查询个人提交的回复-->
 	<select id="selectByUserid" parameterType="_int" resultType="qhw.wechat.entity.meilian.FeedbackBean">
 		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content,f.createTime 
 		FROM meilian_suggestion s 
@@ -29,4 +29,34 @@
 		ORDER BY f.createTime DESC;
 	</select>
 
+		<!-- 查询符合条件的建议总数 -->
+	<select id="selectTotolNum" parameterType="hashmap" resultType="_int">
+		SELECT count(1)  
+		FROM meilian_suggestion s 
+		LEFT JOIN meilian_feedback f ON s.id=f.suggestionid 
+		WHERE 1=1
+		<if test="userId != null"> AND f.userId = #{userId}</if>
+		<if test="title != null"> AND s.title LIKE CONCAT('%', #{title}, '%')</if>
+		<if test="content != null"> AND s.content LIKE CONCAT('%', #{content}, '%')</if>
+		<if test="answer != null"> AND f.content LIKE CONCAT('%', #{content}, '%')</if>
+		<if test="startDate != null"> AND f.createTime $gt;= #{startDate}</if>
+		<if test="title != endDate"> AND f.createTime $lt;= #{endDate}</if>
+	</select>
+	
+	<!-- 查询未回复的建议 (分页)-->
+	<select id="selectByPage" parameterType="hashmap" resultType="qhw.wechat.entity.meilian.FeedbackBean">
+		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content,f.createTime  
+		FROM meilian_suggestion s 
+		LEFT JOIN meilian_feedback f ON s.id=f.suggestionid 
+		LEFT JOIN meilian_user u ON s.userid=u.id
+		WHERE 1=1
+		<if test="userId != null"> AND f.userId = #{userId}</if>
+		<if test="title != null"> AND s.title LIKE CONCAT('%', #{title}, '%')</if>
+		<if test="content != null"> AND s.content LIKE CONCAT('%', #{content}, '%')</if>
+		<if test="answer != null"> AND f.content LIKE CONCAT('%', #{content}, '%')</if>
+		<if test="startDate != null"> AND f.createTime $gt;= #{startDate}</if>
+		<if test="title != endDate"> AND f.createTime $lt;= #{endDate}</if>
+		ORDER BY f.createTime DESC
+		LIMIT #{startNum}, #{pageSize}
+	</select>
 </mapper>

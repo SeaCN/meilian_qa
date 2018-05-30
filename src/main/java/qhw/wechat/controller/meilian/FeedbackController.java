@@ -1,6 +1,10 @@
 package qhw.wechat.controller.meilian;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,18 +68,43 @@ public class FeedbackController {
 	@RequestMapping(value = "/selectByUserid")
 	@ResponseBody
 	public Result selectByUserid(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam Integer userid){
-		List<FeedbackBean> list = null;
+			@RequestParam(defaultValue="1") Integer currentPage,
+			@RequestParam(defaultValue="10") Integer pageSize,
+			@RequestParam(required=false) String title,
+			@RequestParam(required=false) String content,
+			@RequestParam(required=false) String answer,
+			@RequestParam(required=false) Date startDate,
+			@RequestParam(required=false) Date endDate,
+			@RequestParam Integer userId){
+		logger.info("select feedbacks whose author is {}", userId);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("title", title);
+		params.put("content", content);
+		params.put("startDate", startDate);
+		params.put("endDate", endDate);
+		params.put("userId", userId);
+		params.put("answer", answer);
+		int total = 0;
 		try {
-			list = this.feedbackService.selectByUserid(userid);
+			total = this.feedbackService.selectTotolNum(params);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.error("occur error when addSuggestion()", e);
+			logger.error("find total num of log info occur error!", e);
 			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR);
 		}
-		if (list == null) {
-			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_FAIL_SUBMIT);
+		int pages = total/pageSize;//总页码
+		if(total%pageSize != 0){
+			pages = total/pageSize + 1;
 		}
+		params.put("startNum", (currentPage-1)*pageSize);
+		params.put("pageSize", pageSize);
+		List<Map<String, Object>> list = null;
+		try {
+			list = this.feedbackService.selectByPage(params);
+		} catch (Exception e) {
+			logger.error("find error info occur error!", e);
+			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR);
+		}
+		
 		return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, list);
 	}
 	

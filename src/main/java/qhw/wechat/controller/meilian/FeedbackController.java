@@ -48,7 +48,6 @@ public class FeedbackController {
 		try {
 			effect = this.feedbackService.addFeedback(feedback);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			logger.error("occur error when addSuggestion()", e);
 			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR);
 		}

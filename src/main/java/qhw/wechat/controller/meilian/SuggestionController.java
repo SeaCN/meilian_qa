@@ -175,6 +175,12 @@ public class SuggestionController {
 			@RequestParam(required=false) String content,
 			@RequestParam(required=false) Date startDate,
 			@RequestParam(required=false) Date endDate){
+		try {
+			Thread.currentThread().sleep(3000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		logger.info("select suggestions which have no feedback...");
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("title", title);

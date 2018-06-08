@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="qhw.wechat.dao.IUserDao">
-	<insert id="addUser" parameterType="qhw.wechat.entity.meilian.UserBean" >
-		INSERT INTO meilian_user( 
+	<insert id="addUser" parameterType="qhw.wechat.entity.meten.UserBean" >
+		INSERT INTO meten_user( 
 			<trim suffix="" suffixOverrides=",">
 				openid,
 				nickname,
@@ -41,18 +41,18 @@
 		)
 	</insert>
 	
-	<select id="selectById" parameterType="_int" resultType="qhw.wechat.entity.meilian.UserBean">
-		SELECT * FROM meilian_user
+	<select id="selectById" parameterType="_int" resultType="qhw.wechat.entity.meten.UserBean">
+		SELECT * FROM meten_user
 		WHERE id=#{id}
 	</select>
 	
-	<select id="selectByOpenid" parameterType="string" resultType="qhw.wechat.entity.meilian.UserBean">
-		SELECT * FROM meilian_user
+	<select id="selectByOpenid" parameterType="string" resultType="qhw.wechat.entity.meten.UserBean">
+		SELECT * FROM meten_user
 		WHERE openid=#{openid}
 	</select>
 	
-	<update id="updateUser" parameterType="qhw.wechat.entity.meilian.UserBean">
-		UPDATE meilian_user
+	<update id="updateUser" parameterType="qhw.wechat.entity.meten.UserBean">
+		UPDATE meten_user
 		SET 
 		<trim suffix="" suffixOverrides=",">
 			<if test="phone!=null">phone=#{phone},</if>

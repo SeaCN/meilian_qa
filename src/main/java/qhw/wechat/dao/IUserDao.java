@@ -2,7 +2,7 @@ package qhw.wechat.dao;
 
 import java.util.Map;
 
-import qhw.wechat.entity.meilian.UserBean;
+import qhw.wechat.entity.meten.UserBean;
 
 public interface IUserDao {
 	int addUser(UserBean user);

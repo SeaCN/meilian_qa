@@ -1,4 +1,4 @@
-package qhw.wechat.controller.meilian;
+package qhw.wechat.controller.meten;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import qhw.wechat.constant.MessageConst;
-import qhw.wechat.entity.meilian.SuggestionBean;
+import qhw.wechat.entity.meten.SuggestionBean;
 import qhw.wechat.service.ISuggestionService;
 import qhw.wechat.util.Result;
 

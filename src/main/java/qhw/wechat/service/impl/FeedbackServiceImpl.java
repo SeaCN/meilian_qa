@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import qhw.wechat.dao.IFeedbackDao;
-import qhw.wechat.entity.meilian.FeedbackBean;
+import qhw.wechat.entity.meten.FeedbackBean;
 import qhw.wechat.service.IFeedbackService;
 
 @Service

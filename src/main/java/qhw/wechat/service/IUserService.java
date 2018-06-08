@@ -2,7 +2,7 @@ package qhw.wechat.service;
 
 import java.util.Map;
 
-import qhw.wechat.entity.meilian.UserBean;
+import qhw.wechat.entity.meten.UserBean;
 
 public interface IUserService {
 	int addUser(UserBean user);

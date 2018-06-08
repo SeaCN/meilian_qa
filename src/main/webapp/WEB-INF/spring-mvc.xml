@@ -58,7 +58,7 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<mvc:resources location="/meilian/" mapping="/meilian/**" />
+	<mvc:resources location="/meten/" mapping="/meten/**" />
 
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 </beans>

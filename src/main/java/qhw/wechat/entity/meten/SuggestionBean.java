@@ -1,4 +1,4 @@
-package qhw.wechat.entity.meilian;
+package qhw.wechat.entity.meten;
 
 public class SuggestionBean extends BaseBean {
 	private String title;

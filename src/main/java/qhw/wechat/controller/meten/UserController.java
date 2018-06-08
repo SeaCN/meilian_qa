@@ -1,4 +1,4 @@
-package qhw.wechat.controller.meilian;
+package qhw.wechat.controller.meten;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import qhw.wechat.constant.MessageConst;
-import qhw.wechat.entity.meilian.UserBean;
+import qhw.wechat.entity.meten.UserBean;
 import qhw.wechat.service.IUserService;
 
 @Controller

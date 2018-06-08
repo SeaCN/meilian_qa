@@ -3,7 +3,7 @@ package qhw.wechat.dao;
 import java.util.List;
 import java.util.Map;
 
-import qhw.wechat.entity.meilian.FeedbackBean;
+import qhw.wechat.entity.meten.FeedbackBean;
 
 public interface IFeedbackDao {
 	int addFeedback(FeedbackBean feedback);

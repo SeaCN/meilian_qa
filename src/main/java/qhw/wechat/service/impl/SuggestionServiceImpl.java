@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import qhw.wechat.dao.ISuggestionDao;
-import qhw.wechat.entity.meilian.SuggestionBean;
+import qhw.wechat.entity.meten.SuggestionBean;
 import qhw.wechat.service.ISuggestionService;
 
 @Service

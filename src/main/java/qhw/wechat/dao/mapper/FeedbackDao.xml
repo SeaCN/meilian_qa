@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="qhw.wechat.dao.IFeedbackDao">
-	<insert id="addFeedback" parameterType="qhw.wechat.entity.meilian.FeedbackBean">
-		INSERT INTO meilian_feedback(
+	<insert id="addFeedback" parameterType="qhw.wechat.entity.meten.FeedbackBean">
+		INSERT INTO meten_feedback(
 		content,
 		suggestionid,
 		userid
@@ -15,16 +15,16 @@
 		)
 	</insert>
 
-	<select id="selectAll" resultType="qhw.wechat.entity.meilian.FeedbackBean">
-		SELECT * FROM meilian_feedback
+	<select id="selectAll" resultType="qhw.wechat.entity.meten.FeedbackBean">
+		SELECT * FROM meten_feedback
 	</select>
 
 	<!-- 分页查询个人提交的回复-->
 	<select id="selectByUserid" parameterType="_int" resultType="hashmap">
 		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content,f.createTime 
-		FROM meilian_suggestion s 
-		LEFT JOIN meilian_feedback f ON s.id=f.suggestionid 
-		LEFT JOIN meilian_user u ON s.userid=u.id
+		FROM meten_suggestion s 
+		LEFT JOIN meten_feedback f ON s.id=f.suggestionid 
+		LEFT JOIN meten_user u ON s.userid=u.id
 		WHERE f.userid=#{userid}
 		ORDER BY f.createTime DESC;
 	</select>
@@ -32,28 +32,28 @@
 		<!-- 查询符合条件的建议总数 -->
 	<select id="selectTotolNum" parameterType="hashmap" resultType="_int">
 		SELECT count(1)  
-		FROM meilian_suggestion s 
-		LEFT JOIN meilian_feedback f ON s.id=f.suggestionid 
+		FROM meten_suggestion s 
+		LEFT JOIN meten_feedback f ON s.id=f.suggestionid 
 		WHERE 1=1
 		<if test="userId != null"> AND s.userId = #{userId}</if>
 		<if test="title != null"> AND s.title LIKE CONCAT('%', #{title}, '%')</if>
 		<if test="content != null"> AND s.content LIKE CONCAT('%', #{content}, '%')</if>
 		<if test="startDate != null"> AND s.createTime $gt;= #{startDate}</if>
-		<if test="title != endDate"> AND s.createTime $lt;= #{endDate}</if>
+		<if test="endDate != null"> AND s.createTime $lt;= #{endDate}</if>
 	</select>
 	
 	<!-- 查询未回复的建议 (分页)-->
 	<select id="selectByPage" parameterType="hashmap" resultType="hashmap">
-		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content fcontent,f.createTime  
-		FROM meilian_suggestion s 
-		LEFT JOIN meilian_feedback f ON s.id=f.suggestionid 
-		LEFT JOIN meilian_user u ON s.userid=u.id
+		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content fcontent,f.createTime fcreateTime
+		FROM meten_suggestion s 
+		LEFT JOIN meten_feedback f ON s.id=f.suggestionid 
+		LEFT JOIN meten_user u ON s.userid=u.id
 		WHERE 1=1
 		<if test="userId != null"> AND s.userId = #{userId}</if>
 		<if test="title != null"> AND s.title LIKE CONCAT('%', #{title}, '%')</if>
 		<if test="content != null"> AND s.content LIKE CONCAT('%', #{content}, '%')</if>
 		<if test="startDate != null"> AND s.createTime $gt;= #{startDate}</if>
-		<if test="title != endDate"> AND s.createTime $lt;= #{endDate}</if>
+		<if test="endDate != null"> AND s.createTime $lt;= #{endDate}</if>
 		ORDER BY s.createTime DESC
 		LIMIT #{startNum}, #{pageSize}
 	</select>

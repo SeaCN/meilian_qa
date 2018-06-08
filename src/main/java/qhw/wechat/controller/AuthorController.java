@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
-import qhw.wechat.entity.meilian.UserBean;
+import qhw.wechat.entity.meten.UserBean;
 import qhw.wechat.service.IUserService;
 import qhw.wechat.token.AccessToken;
 import qhw.wechat.util.HttpUtil;

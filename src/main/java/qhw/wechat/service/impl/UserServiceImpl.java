@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import qhw.wechat.dao.IUserDao;
-import qhw.wechat.entity.meilian.UserBean;
+import qhw.wechat.entity.meten.UserBean;
 import qhw.wechat.service.IUserService;
 
 @Service

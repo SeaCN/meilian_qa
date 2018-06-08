@@ -3,8 +3,8 @@ package qhw.wechat.service;
 import java.util.List;
 import java.util.Map;
 
-import qhw.wechat.entity.meilian.SuggestionBean;
-import qhw.wechat.entity.meilian.UserBean;
+import qhw.wechat.entity.meten.SuggestionBean;
+import qhw.wechat.entity.meten.UserBean;
 
 public interface ISuggestionService {
 	int addSugg(SuggestionBean suggestion);

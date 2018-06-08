@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import qhw.wechat.util.HttpUtil;
 import qhw.wechat.util.PropertyPlaceholder;
@@ -16,10 +17,15 @@ import com.alibaba.fastjson.JSONObject;
 public class AccessToken {
 	private static final Logger logger = LoggerFactory.getLogger(AccessToken.class);
 	
-	public static final String appid = "wx9dbf29efc0bded85";
-	public static final String secret = "f17c6efaec1badc8827a42dcfc6e2352";
+	public static String appid = "";
+	public static String secret = "";
 	private static final String grant_type = "client_credential";
 	private static final String token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=%s&appid=%s&secret=%s";
+	
+	static {
+		appid = PropertyPlaceholder.getContextProperty("appid");
+		secret = PropertyPlaceholder.getContextProperty("secret");
+	}
 	
 	/**
 	 * 获取accessToken,
@@ -27,10 +33,10 @@ public class AccessToken {
 	 * @return
 	 */
 	public static String getAccessToken() throws Exception{
-		String update_time = PropertyPlaceholder.getContextProperty("update_time");
-		String expires_in = PropertyPlaceholder.getContextProperty("expires_in");
-		long updateTime = Long.parseLong(update_time == null ? "0" : update_time);
-		long expiresIn = Long.parseLong(expires_in == null ? "0" : expires_in);
+		String update_time = PropertyPlaceholder.getContextProperty("token_update_time");
+		String expires_in = PropertyPlaceholder.getContextProperty("token_expires_in");
+		long updateTime = Long.parseLong(StringUtils.isEmpty(update_time)? "0" : update_time);
+		long expiresIn = Long.parseLong(StringUtils.isEmpty(expires_in)? "0" : expires_in);
 		long currentTime = System.currentTimeMillis();
 		if (currentTime > updateTime + expiresIn) {//token失效
 			return updateAccessToken();
@@ -58,7 +64,7 @@ public class AccessToken {
 	 * @return
 	 */
 	public static synchronized String updateAccessToken() throws Exception{
-		String updateTime = PropertyPlaceholder.getContextProperty("update_time") == null ? "0" : PropertyPlaceholder.getContextProperty("update_time");
+		String updateTime = StringUtils.isEmpty(PropertyPlaceholder.getContextProperty("token_update_time")) ? "0" : PropertyPlaceholder.getContextProperty("token_update_time");
 
 		long currentTime = System.currentTimeMillis();
 		long subtract = currentTime - Long.parseLong(updateTime);
@@ -72,8 +78,8 @@ public class AccessToken {
 				String expires_in = object.getString("expires_in");
 				//修改缓存中的值
 				PropertyPlaceholder.update("access_token", access_token);
-				PropertyPlaceholder.update("expires_in", expires_in);
-				PropertyPlaceholder.update("update_time", currentTime + "");
+				PropertyPlaceholder.update("token_expires_in", expires_in);
+				PropertyPlaceholder.update("token_update_time", currentTime + "");
 				
 				//修改properties文件中的值
 				Properties prop = new Properties();
@@ -81,8 +87,8 @@ public class AccessToken {
 				prop.load(in);
 				in.close();
 				prop.setProperty("access_token", access_token);
-				prop.setProperty("expires_in", expires_in);
-				prop.setProperty("update_time", currentTime + "");
+				prop.setProperty("token_expires_in", expires_in);
+				prop.setProperty("token_update_time", currentTime + "");
 				FileOutputStream out = new FileOutputStream(new File(AccessToken.class.getResource("token.properties").toURI()));
 				prop.store(out, "cc");
 				out.close();

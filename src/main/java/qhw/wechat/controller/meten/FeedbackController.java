@@ -31,7 +31,8 @@ public class FeedbackController {
 	@Resource
 	private ITemplateMsgService templateServiceImpl;
 	/**
-	 * 回复建议	
+	 * 回复建议
+	 * 同一个建议，只能回复一次	
 	 * @param request
 	 * @param response
 	 * @param feedback

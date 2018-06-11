@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import qhw.wechat.constant.MessageConst;
+import qhw.wechat.token.AccessToken;
 import qhw.wechat.token.JsapiTicket;
 import qhw.wechat.util.Result;
 
@@ -60,13 +61,14 @@ public class JssdkController {
         for (int i = 0; i < nameList.size(); i++) {  
             origin += nameList.get(i) + "=" + valueMap.get(nameList.get(i)).toString() + "&";  
         }  
-        
+       origin = origin.substring(0, origin.length() - 1); 
        String sign = DigestUtils.sha1Hex(origin);
        logger.info("calc sign:{}", sign);
-       Map<String, Object> result = new HashMap<String, Object>();  
+       Map<String, String> result = new HashMap<String, String>();  
        result.put("sign", sign);
-       result.put("noncestr", noncestr);
-       result.put("timestamp", timestamp);
+       result.put("noncestr", noncestr+"");
+       result.put("timestamp", timestamp+"");
+       result.put("appId", AccessToken.appid);
        
        return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, result);
 	}

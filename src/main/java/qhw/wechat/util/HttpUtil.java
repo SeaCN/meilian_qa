@@ -120,9 +120,9 @@ public class HttpUtil{
 		HttpClient client = HttpClientBuilder.create().build();
 		URL url1 = new URL(url);   
         URI uri = new URI(url1.getProtocol(), url1.getHost(), url1.getPath(), url1.getQuery(), null);
-		HttpGet post = new HttpGet(uri);
+		HttpGet get = new HttpGet(uri);
 		
-		HttpResponse response = client.execute(post);
+		HttpResponse response = client.execute(get);
 		String responseText = "";
 		if(response != null){
 			String contentType = response.getFirstHeader("Content-Type").getValue();

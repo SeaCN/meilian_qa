@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import qhw.wechat.constant.MessageConst;
 import qhw.wechat.token.AccessToken;
 import qhw.wechat.token.JsapiTicket;
+import qhw.wechat.util.HttpUtil;
 import qhw.wechat.util.Result;
 
 @Controller
 @RequestMapping(value = "/jssdk")
 public class JssdkController {
 	private static final Logger logger = LoggerFactory.getLogger(JssdkController.class);
+	private static final String mediaUrl = "https://api.weixin.qq.com/cgi-bin/media/get/jssdk?access_token=%s&media_id=%s";
 	
 	@RequestMapping(value = "/sign")
 	@ResponseBody
@@ -71,5 +73,22 @@ public class JssdkController {
        result.put("appId", AccessToken.appid);
        
        return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, result);
+	}
+	
+	@RequestMapping(value = "/getAudio")
+	@ResponseBody
+	public Result getAudio(HttpServletRequest request,
+			@RequestParam String serverId) {
+		try {
+			String accessToken = AccessToken.getAccessToken();
+			String url = String.format(this.mediaUrl, accessToken, serverId);
+			HttpUtil.get(url);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error("occur error while getAudio()");
+			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR); 
+		}
+		return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT);
 	}
 }

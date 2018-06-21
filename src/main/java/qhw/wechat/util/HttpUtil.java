@@ -128,7 +128,7 @@ public class HttpUtil{
 			String contentType = response.getFirstHeader("Content-Type").getValue();
 			HttpEntity entity = response.getEntity();
 			InputStream in = entity.getContent();
-			if (!contentType.equals("image/jpeg")) {
+			if (contentType.contains("text/plain") || contentType.contains("application/json")) {
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				byte[] buffer = new byte[1024];
 				int len = -1;
@@ -140,16 +140,9 @@ public class HttpUtil{
 				byte[] result = out.toByteArray();
 				responseText = new String(result, charset);
 			}else {
-				String absoluteUrl = System.getProperty("user.dir");
-				FileOutputStream out = new FileOutputStream(new File(absoluteUrl + "/WebContent/img/test.jpg"));
-				byte[] temp = new byte[1024];
-				int len = -1;
-				while ((len = in.read(temp)) != -1) {
-					out.write(temp, 0, len);
-				}
-				temp = null;
-				out.close();
-				in.close();
+				String contentDisposition = response.getFirstHeader("Content-disposition").getValue();
+				String filename = contentDisposition.substring(contentDisposition.indexOf("filename=")+10, contentDisposition.length()-1);
+				responseText = FileUtil.saveSpeex(filename, in);
 			}
 		}
 		return responseText;

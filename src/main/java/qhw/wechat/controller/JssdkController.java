@@ -82,7 +82,8 @@ public class JssdkController {
 		try {
 			String accessToken = AccessToken.getAccessToken();
 			String url = String.format(this.mediaUrl, accessToken, serverId);
-			HttpUtil.get(url);
+			String response = HttpUtil.get(url);
+			logger.info("save to local:{}", response);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

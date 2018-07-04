@@ -111,7 +111,8 @@ public class HttpUtil{
 	}
 	
 	/**
-	 * 如果请求得到的是图片，将图片保存到本地指定目录
+	 * 1.如果请求返回的是文本，则返回文本
+	 * 2.如果请求返回的是不是文本(如图片)，则保存到服务器，并返回保存的地址
 	 * @param url
 	 * @return
 	 * @throws Exception

@@ -6,9 +6,7 @@ import java.io.FileReader;
 import java.math.BigInteger;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.spec.RSAPrivateCrtKeySpec;
-import java.security.spec.RSAPublicKeySpec;
 
 import sun.misc.BASE64Decoder;
 import sun.security.util.DerInputStream;
@@ -16,7 +14,7 @@ import sun.security.util.DerValue;
 
 public class OpenSSHUtil {
 	public static PrivateKey getPrivateKey() throws Exception{
-		String path = "C:\\Users\\Administrator.USER-20170815MG\\Desktop\\newkey\\key.ppk";
+		String path = "C:\\Users\\Administrator\\Desktop\\newkey\\key.ppk";
 		BufferedReader br = new BufferedReader(new FileReader(new File(path)));
 		String keyinfo = "";
 		String line = null;
@@ -26,6 +24,7 @@ public class OpenSSHUtil {
 			keyinfo += line;
 			}
 		}
+		br.close();
 		//密钥信息用 BASE64 编码加密过，需要先解密
 		byte[] decodeKeyinfo = (new BASE64Decoder()).decodeBuffer(keyinfo);
 		//使用 DerInputStream 读取密钥信息
@@ -33,7 +32,7 @@ public class OpenSSHUtil {
 		//密钥不含 otherPrimeInfos 信息，故只有 9 段
 		DerValue[] ders = dis.getSequence(9);
 		//依次读取 RSA 因子信息
-		int version = ders[0].getBigInteger().intValue();
+//		int version = ders[0].getBigInteger().intValue();
 		BigInteger modulus = ders[1].getBigInteger();
 		BigInteger publicExponent = ders[2].getBigInteger();
 		BigInteger privateExponent = ders[3].getBigInteger();
@@ -44,9 +43,9 @@ public class OpenSSHUtil {
 		BigInteger crtCoefficient = ders[8].getBigInteger();        
 		//generate public key and private key
 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		RSAPublicKeySpec rsaPublicKeySpec = 
-		new RSAPublicKeySpec(modulus, publicExponent);
-		PublicKey publicKey = keyFactory.generatePublic(rsaPublicKeySpec);              
+//		RSAPublicKeySpec rsaPublicKeySpec = 
+//		new RSAPublicKeySpec(modulus, publicExponent);
+//		PublicKey publicKey = keyFactory.generatePublic(rsaPublicKeySpec);              
 		RSAPrivateCrtKeySpec rsaPrivateKeySpec = 
 		new RSAPrivateCrtKeySpec(modulus,publicExponent,privateExponent,
 		primeP,primeQ,primeExponentP,primeExponentQ,crtCoefficient);

@@ -22,6 +22,7 @@ import qhw.wechat.token.AccessToken;
 import qhw.wechat.token.JsapiTicket;
 import qhw.wechat.util.HttpUtil;
 import qhw.wechat.util.Result;
+import qhw.wechat.util.SpeexUtils;
 
 @Controller
 @RequestMapping(value = "/jssdk")
@@ -84,6 +85,16 @@ public class JssdkController {
 			String url = String.format(this.mediaUrl, accessToken, serverId);
 			String response = HttpUtil.get(url);
 			logger.info("save to local:{}", response);
+			//解码speex为wav保存到服务器
+			String wavPath = response.substring(0, response.lastIndexOf(".")-1) + ".wav";
+			logger.info("decode to file:{}", wavPath);
+			try {
+				SpeexUtils.decode(response, wavPath);
+			} catch (Exception e) {
+				//解压出错
+				e.printStackTrace();
+				logger.error("decode speex to wav occur error!");
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

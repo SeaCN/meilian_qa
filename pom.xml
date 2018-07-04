@@ -240,6 +240,18 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		
+		<repository>
+			<id>speex</id>
+			<name>speex</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<build>

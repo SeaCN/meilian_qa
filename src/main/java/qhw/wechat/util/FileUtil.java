@@ -16,7 +16,7 @@ public class FileUtil {
 	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 	
 	/**
-	 * 保存文件到本地
+	 * 保存文件到本地,返回保存的路径
 	 * @param fileName
 	 * @param inputStream
 	 * @return

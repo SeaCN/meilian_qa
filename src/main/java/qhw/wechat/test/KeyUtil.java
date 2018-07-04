@@ -21,7 +21,7 @@ import sun.security.util.DerValue;
 
 public class KeyUtil {
 	public static PrivateKey getPrivateKey() {
-        String file = "C:\\Users\\Administrator.USER-20170815MG\\Desktop\\newkey\\key.ppk";
+        String file = "C:\\Users\\Administrator\\Desktop\\newkey\\key.ppk";
         try {
             Map<String, String> keyMap = parseKV(file);
             //获取公钥信息

@@ -22,7 +22,7 @@ import qhw.wechat.token.AccessToken;
 import qhw.wechat.token.JsapiTicket;
 import qhw.wechat.util.HttpUtil;
 import qhw.wechat.util.Result;
-import qhw.wechat.util.SpeexUtils;
+import util.speex.SpeexUtils;
 
 @Controller
 @RequestMapping(value = "/jssdk")
@@ -76,10 +76,17 @@ public class JssdkController {
        return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, result);
 	}
 	
+	/**
+	 * 通过 获取临时素材接口 下载通过JSSDK上传的录音，并转码为wav格式
+	 * @param request
+	 * @param serverId
+	 * @return
+	 */
 	@RequestMapping(value = "/getAudio")
 	@ResponseBody
 	public Result getAudio(HttpServletRequest request,
 			@RequestParam String serverId) {
+		Map<String, String> result = new HashMap<String, String>();  
 		try {
 			String accessToken = AccessToken.getAccessToken();
 			String url = String.format(this.mediaUrl, accessToken, serverId);
@@ -90,17 +97,19 @@ public class JssdkController {
 			logger.info("decode to file:{}", wavPath);
 			try {
 				SpeexUtils.decode(response, wavPath);
+				//保存转码后的文件路径到数据库
+				result.put("wavPath", wavPath);
+				return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, result); 
 			} catch (Exception e) {
 				//解压出错
 				e.printStackTrace();
 				logger.error("decode speex to wav occur error!");
+				return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR); 
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			logger.error("occur error while getAudio()");
 			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR); 
 		}
-		return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT);
 	}
 }

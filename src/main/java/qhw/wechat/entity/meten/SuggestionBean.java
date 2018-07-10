@@ -5,7 +5,15 @@ public class SuggestionBean extends BaseBean {
 	private String content;
 	private Integer userid;
 	private Integer isFeedback = 0;
-	private String img;
+	private String img;	
+	private String wavPath;// 转码后的语音存放位置
+	
+	public String getWavPath() {
+		return wavPath;
+	}
+	public void setWavPath(String wavPath) {
+		this.wavPath = wavPath;
+	}
 	public String getImg() {
 		return img;
 	}

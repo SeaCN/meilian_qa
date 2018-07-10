@@ -2,8 +2,6 @@ package qhw.wechat.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,10 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -27,7 +23,7 @@ import qhw.wechat.util.HttpUtil;
 @Controller
 public class AuthorController {
 	private static final Logger logger = LoggerFactory.getLogger(AuthorController.class);
-	private static final String state = "meilian";
+	private static final String state = "meten";
 	
 	@Autowired
 	private IUserService userService;

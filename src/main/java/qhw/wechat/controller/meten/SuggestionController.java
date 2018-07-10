@@ -24,6 +24,11 @@ import qhw.wechat.entity.meten.SuggestionBean;
 import qhw.wechat.service.ISuggestionService;
 import qhw.wechat.util.Result;
 
+/**
+ * 用户建议相关操作
+ * @author Q
+ *
+ */
 @Controller
 @RequestMapping(value = "/suggestion")
 public class SuggestionController {

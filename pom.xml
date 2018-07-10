@@ -197,29 +197,7 @@
 			<version>${kaptcha.version}</version>
 			<classifier>jdk15</classifier>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mobicents.external.jspeex/jspeex -->
-		<dependency>
-		    <groupId>com.orctom</groupId>
-		    <artifactId>speex4j</artifactId>
-		    <version>1.0.3</version>
-		</dependency>
-<!-- https://mvnrepository.com/artifact/org.mobicents.external.jspeex/jspeex -->
-<dependency>
-    <groupId>org.mobicents.external.jspeex</groupId>
-    <artifactId>jspeex</artifactId>
-    <version>0.9.7</version>
-</dependency>
-		
- <dependency>
-   <groupId>org.bitbucket.b_c</groupId>
-   <artifactId>jose4j</artifactId>
-   <version>0.6.3</version>
- </dependency>
-<dependency>
-    <groupId>io.jsonwebtoken</groupId>
-    <artifactId>jjwt</artifactId>
-    <version>0.9.0</version>
-</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -233,18 +211,6 @@
 			<id>sonatype-forge</id>
 			<name>Sonatype Forge</name>
 			<url>https://repository.sonatype.org/content/groups/forge</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		
-		<repository>
-			<id>speex</id>
-			<name>speex</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>

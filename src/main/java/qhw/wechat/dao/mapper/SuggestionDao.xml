@@ -9,7 +9,8 @@
 		img,
 		userid,
 		createTime,
-		isFeedback
+		isFeedback,
+		wavPath
 		)
 		VALUES(
 		#{title},
@@ -17,7 +18,8 @@
 		#{img},
 		#{userid},
 		#{createTime},
-		#{isFeedback}
+		#{isFeedback},
+		#{wavPath}
 		)
 	</insert>
 	

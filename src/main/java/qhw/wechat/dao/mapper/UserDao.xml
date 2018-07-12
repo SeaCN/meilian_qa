@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="qhw.wechat.dao.IUserDao">
-	<insert id="addUser" parameterType="qhw.wechat.entity.meten.UserBean" >
+	<insert id="addUser" parameterType="qhw.wechat.entity.meten.UserBean" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO meten_user( 
 			<trim suffix="" suffixOverrides=",">
 				openid,

@@ -89,7 +89,7 @@ public class JssdkController {
 		Map<String, String> result = new HashMap<String, String>();  
 		try {
 			String accessToken = AccessToken.getAccessToken();
-			String url = String.format(this.mediaUrl, accessToken, serverId);
+			String url = String.format(JssdkController.mediaUrl, accessToken, serverId);
 			String response = HttpUtil.get(url);
 			logger.info("save to local:{}", response);
 			//解码speex为wav保存到服务器

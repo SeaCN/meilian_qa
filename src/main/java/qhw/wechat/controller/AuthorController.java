@@ -34,21 +34,19 @@ public class AuthorController {
 	 */
 	@RequestMapping("/getCode")
 	public String getCode(HttpServletRequest request, HttpServletResponse response){
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		String redirect_uri = "http://www.devqz.club/wechat_meilian/redirect_uri";
+		String redirect_uri = "http://java.devqz.club/meten/redirect_uri?desPath=" + request.getParameter("desPath");
 		String scope = "snsapi_base";
 		try {
 			redirect_uri = URLEncoder.encode(redirect_uri, "utf-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			logger.error("", e);
+			logger.error("occur error while encode", e);
 		}
 		String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
 				+ AccessToken.appid
 				+ "&redirect_uri=" + redirect_uri
 				+ "&response_type=code"
 				+ "&scope=" + scope
-				+ "&state=" + state
+				+ "&state=" + AuthorController.state
 				+ "#wechat_redirect";
 		logger.info("url:" + url);
 		return "redirect:" + url;
@@ -62,8 +60,9 @@ public class AuthorController {
 	@RequestMapping(value = "/redirect_uri")
 	public String getAccessTokenAndOpenid(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam String code, @RequestParam String state){
+		String desPath = request.getParameter("desPath");
 		String res = null;
-		if (state.equals(this.state)) {
+		if (state.equals(AuthorController.state)) {
 			String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
 			url = String.format(url, AccessToken.appid, AccessToken.secret, code);
 			try {
@@ -76,13 +75,14 @@ public class AuthorController {
 		logger.info("res:" + res);
 		JSONObject jsonObject = JSONObject.parseObject(res);
 		String openid = jsonObject.getString("openid");
+		request.getSession().setAttribute("openId", openid);
 		//查库确定用户是否已经注册，若已注册直接跳转到意见提交页面，无则先跳到注册页面
 		UserBean user = this.userService.selectByOpenid(openid);
 		if (user == null) {
-			return "redirect:/meilian/index.html#regist?openid="+openid;
+			return "redirect:registPage?desPath="+desPath;// 跳转到注册页面
 		}else {
-			int userId = user.getId();
-			return "redirect:/meilian/index.html#suggest?userId="+userId;
+			request.getSession().setAttribute("cuser", user);
+			return "redirect:" + desPath;
 		}
 	}
 }

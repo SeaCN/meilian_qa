@@ -35,6 +35,11 @@ public class SuggestionController {
 	private final static Logger logger = LoggerFactory.getLogger(SuggestionController.class);
 	@Autowired
 	private ISuggestionService suggestionService;
+	
+	@RequestMapping(value = "/addSuggView")
+	public String addSuggestionView(HttpServletRequest request, HttpServletResponse response) {
+		return "redirect:http://web.devqz.club/#/CommonUserPage?selected=2";
+	}
 	/**
 	 * 提交意见	
 	 * @param request
@@ -107,7 +112,6 @@ public class SuggestionController {
 			logger.error("occur error when selectAll()", e);
 			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR);
 		}
-		
 		return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, list);
 	}
 	

@@ -30,7 +30,7 @@ import qhw.wechat.util.Sha1Util;
 @Controller
 public class IndexController {
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
-	private static final String token = "meilian";
+	private static final String token = "meten";
 	
 	/**
 	 * 入口	

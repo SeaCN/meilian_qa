@@ -37,10 +37,18 @@ public class UserController {
 	@ResponseBody
 	public Map<String, Object> regist(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody UserBean user){
-		int effect = 0;
 		Map<String, Object> result = new HashMap<String, Object>();
+		Object openId = request.getSession().getAttribute("openId");
+		if (null == openId) {
+			result.put(MessageConst.MSG_CODE, MessageConst.MSG_FAIL_STATUS);
+			result.put(MessageConst.MSG_MESSAGE, MessageConst.MSG_ERROR);
+			return result;
+		}
+		user.setOpenid(openId.toString());
+		int effect = 0;
 		try {
 			effect = userService.addUser(user);
+			request.getSession().setAttribute("cuser", user);
 		} catch (Exception e) {
 			logger.info("occur error when regist()", e);
 			result.put(MessageConst.MSG_CODE, MessageConst.MSG_FAIL_STATUS);
@@ -55,5 +63,28 @@ public class UserController {
 			result.put(MessageConst.MSG_MESSAGE, MessageConst.MSG_FAIL_REGIST);
 		}
 		return result;
+	}
+	
+	/**
+	 * 去注册页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/registPage")
+	public String toRegistPage(HttpServletRequest request, HttpServletResponse response) {
+		String desPath = request.getParameter("desPath");
+		return "redirect:http://web.devqz.club/#/Regist?desPath="+desPath;
+	}
+	
+	/**
+	 * 去注册页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/testweb")
+	public String test(HttpServletRequest request, HttpServletResponse response) {
+		return "redirect:http://web.devqz.club/#/test";
 	}
 }

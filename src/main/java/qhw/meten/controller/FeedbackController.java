@@ -1,4 +1,4 @@
-package qhw.wechat.controller.meten;
+package qhw.meten.controller;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import qhw.wechat.constant.MessageConst;
 import qhw.wechat.entity.meten.FeedbackBean;
+import qhw.wechat.entity.meten.UserBean;
 import qhw.wechat.service.IFeedbackService;
 import qhw.wechat.service.ITemplateMsgService;
 import qhw.wechat.util.Result;
@@ -74,8 +75,13 @@ public class FeedbackController {
 			@RequestParam(required=false) String content,
 			@RequestParam(required=false) String answer,
 			@RequestParam(required=false) Date startDate,
-			@RequestParam(required=false) Date endDate,
-			@RequestParam Integer userId){
+			@RequestParam(required=false) Date endDate){
+		Object object = request.getSession().getAttribute("cuser");
+		if (object == null) {
+			
+			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR);
+		}
+		Integer userId = ((UserBean)object).getId();
 		logger.info("select feedbacks whose author is {}", userId);
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("title", title);

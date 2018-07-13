@@ -1,4 +1,4 @@
-package qhw.wechat.controller.meten;
+package qhw.meten.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +26,23 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 	
+	@RequestMapping(value = "/testweb")
+	public String test(HttpServletRequest request, HttpServletResponse response) {
+		String desPath = request.getParameter("desPath");
+		return "redirect:http://web.devqz.club/#/test";
+	}
+	
+	/**
+	 * 去注册页面
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/registPage")
+	public String toRegistPage(HttpServletRequest request, HttpServletResponse response) {
+		String desPath = request.getParameter("desPath");
+		return "redirect:http://web.devqz.club/#/Regist?desPath="+desPath;
+	}
 	/**
 	 * 用户注册	
 	 * @param request
@@ -48,9 +65,10 @@ public class UserController {
 		int effect = 0;
 		try {
 			effect = userService.addUser(user);
-			request.getSession().setAttribute("cuser", user);
+			UserBean cuser = userService.selectById(user.getId());
+			request.getSession().setAttribute("cuser", cuser);
 		} catch (Exception e) {
-			logger.info("occur error when regist()", e);
+			logger.info("occur error when regist(...)", e);
 			result.put(MessageConst.MSG_CODE, MessageConst.MSG_FAIL_STATUS);
 			result.put(MessageConst.MSG_MESSAGE, MessageConst.MSG_ERROR);
 			return result;
@@ -63,28 +81,5 @@ public class UserController {
 			result.put(MessageConst.MSG_MESSAGE, MessageConst.MSG_FAIL_REGIST);
 		}
 		return result;
-	}
-	
-	/**
-	 * 去注册页面
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/registPage")
-	public String toRegistPage(HttpServletRequest request, HttpServletResponse response) {
-		String desPath = request.getParameter("desPath");
-		return "redirect:http://web.devqz.club/#/Regist?desPath="+desPath;
-	}
-	
-	/**
-	 * 去注册页面
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/testweb")
-	public String test(HttpServletRequest request, HttpServletResponse response) {
-		return "redirect:http://web.devqz.club/#/test";
 	}
 }

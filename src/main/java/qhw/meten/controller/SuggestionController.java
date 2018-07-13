@@ -1,4 +1,4 @@
-package qhw.wechat.controller.meten;
+package qhw.meten.controller;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import qhw.wechat.constant.MessageConst;
 import qhw.wechat.entity.meten.SuggestionBean;
+import qhw.wechat.entity.meten.UserBean;
 import qhw.wechat.service.ISuggestionService;
 import qhw.wechat.util.Result;
 
@@ -50,10 +51,12 @@ public class SuggestionController {
 	@ResponseBody
 	public Result addSuggestion(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody SuggestionBean suggestion){
-		logger.info("add a suggestion...");
-		if (suggestion.getUserid() == null) {
+		Object object = request.getSession().getAttribute("cuser");
+		if (null == object) {
+			logger.error("invalid request without userinfo in session...");
 			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR);
 		}
+		suggestion.setUserid(((UserBean)object).getId());
 		int effect = 0;
 		try {
 			effect = this.suggestionService.addSugg(suggestion);

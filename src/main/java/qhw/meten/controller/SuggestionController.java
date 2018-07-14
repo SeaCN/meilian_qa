@@ -80,7 +80,7 @@ public class SuggestionController {
 	@RequestMapping(value = "/updateSugg")
 	@ResponseBody
 	public Result updateSuggestion(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute SuggestionBean suggestion){
+			@RequestBody SuggestionBean suggestion){
 		if (suggestion.getId() == null) {
 			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR);
 		}

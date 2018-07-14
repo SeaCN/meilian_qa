@@ -33,17 +33,12 @@ public class HeadersCORSFilter implements Filter {
 		
 		HttpServletRequest hrequest = (HttpServletRequest)request;
 		String path = hrequest.getServletPath();
+		String to = hrequest.getParameter("to");
 		if ("/meten/getCode".endsWith(path) || "/meten/index".endsWith(path) || "/meten/redirect_uri".endsWith(path)
 				|| "/meten/registPage".endsWith(path) || "/meten/regist".endsWith(path)) {
 			chain.doFilter(request, servletResponse);
 		} else {	
-			//判断是否登录
-			HttpSession session = hrequest.getSession();
-			if (null == session.getAttribute("cuser")) {
-				response.sendRedirect("/meten/getCode?desPath=" + path);
-			} else {
-				chain.doFilter(request, servletResponse);
-			}
+			chain.doFilter(request, servletResponse);
 		}
 	}
 

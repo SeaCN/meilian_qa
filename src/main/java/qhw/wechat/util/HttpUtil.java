@@ -143,7 +143,7 @@ public class HttpUtil{
 			}else {
 				String contentDisposition = response.getFirstHeader("Content-disposition").getValue();
 				String filename = contentDisposition.substring(contentDisposition.indexOf("filename=")+10, contentDisposition.length()-1);
-				responseText = FileUtil.saveSpeex(filename, in);
+				responseText = FileUtil.saveToServer(filename, in);
 			}
 		}
 		return responseText;

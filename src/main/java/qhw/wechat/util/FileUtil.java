@@ -21,11 +21,11 @@ public class FileUtil {
 	 * @param inputStream
 	 * @return
 	 */
-	public static String saveSpeex(String fileName, InputStream inputStream) {
+	public static String saveToServer(String fileName, InputStream inputStream) {
 		String filePath = "";
 		String path = System.getProperty("webAppRootKey");
 		String date = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
-		File file = new File(path + "/speex/" + date + "/" + fileName);
+		File file = new File(path + getSuffix(fileName) + "/" + date + "/" + fileName);
 		try {
 			FileUtils.copyInputStreamToFile(inputStream, file);
 			filePath = file.getPath();
@@ -34,5 +34,9 @@ public class FileUtil {
 		}
 		
 		return filePath;
+	}
+	
+	private static String getSuffix(String fileName) {
+		return fileName.substring(fileName.lastIndexOf(".") + 1);
 	}
 }

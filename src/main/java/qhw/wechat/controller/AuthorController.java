@@ -38,6 +38,7 @@ public class AuthorController {
 		if (null != object) {
 			return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, 1);
 		}else {
+			logger.error("there is no cuser in session!");
 			return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, 0);
 		}
 	}

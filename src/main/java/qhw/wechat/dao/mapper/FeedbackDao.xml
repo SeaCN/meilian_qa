@@ -21,7 +21,7 @@
 
 	<!-- 分页查询个人提交的回复-->
 	<select id="selectByUserid" parameterType="_int" resultType="hashmap">
-		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content,f.createTime 
+		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,s.wavPath,f.content,f.createTime 
 		FROM meten_suggestion s 
 		LEFT JOIN meten_feedback f ON s.id=f.suggestionid 
 		LEFT JOIN meten_user u ON s.userid=u.id
@@ -44,7 +44,7 @@
 	
 	<!-- 查询未回复的建议 (分页)-->
 	<select id="selectByPage" parameterType="hashmap" resultType="hashmap">
-		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content fcontent,f.createTime fcreateTime
+		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,s.wavPath,f.content fcontent,f.createTime fcreateTime
 		FROM meten_suggestion s 
 		LEFT JOIN meten_feedback f ON s.id=f.suggestionid 
 		LEFT JOIN meten_user u ON s.userid=u.id
@@ -56,5 +56,13 @@
 		<if test="endDate != null"> AND s.createTime $lt;= #{endDate}</if>
 		ORDER BY s.createTime DESC
 		LIMIT #{startNum}, #{pageSize}
+	</select>
+	
+	<!-- 查询所有某个suggestion的所有回复 -->
+	<select id="selectBySugg" parameterType="_int" resultType="hashmap">
+		SELECT u.nickname,u.openid,f.content,f.createTime 
+		FROM meten_feedback f
+		LEFT JOIN meten_user u ON f.userid=u.id
+		WHERE f.suggestionid=#{suggestionid}
 	</select>
 </mapper>

@@ -11,4 +11,5 @@ public interface IFeedbackDao {
 	List<FeedbackBean> selectByUserid(int userid);
 	int selectTotolNum(Map<String, Object> params);
 	List<Map<String, Object>> selectByPage(Map<String, Object> params);
+	List<Map<String, Object>> selectBySugg(Integer suggestionid);
 }

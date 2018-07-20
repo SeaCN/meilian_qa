@@ -114,4 +114,18 @@ public class FeedbackController {
 		return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, list);
 	}
 	
+	/**
+	 * 查询单个建议的所有回复
+	 * @param request
+	 * @param response
+	 * @param suggestionid
+	 * @return
+	 */
+	@RequestMapping(value = "/selectBySugg")
+	@ResponseBody
+	public Result selectBySugg(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam Integer suggestionid) {
+		List<Map<String, Object>> list = this.feedbackService.selectBySugg(suggestionid);
+		return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, this.feedbackService.selectBySugg(suggestionid));
+	}
 }

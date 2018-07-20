@@ -22,18 +22,17 @@ public class FileUtil {
 	 * @return
 	 */
 	public static String saveToServer(String fileName, InputStream inputStream) {
-		String filePath = "";
 		String path = System.getProperty("webAppRootKey");
 		String date = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
-		File file = new File(path + getSuffix(fileName) + "/" + date + "/" + fileName);
+		String relativePath = File.separator + "file" + File.separator + getSuffix(fileName) + File.separator + date + File.separator + fileName;
+		File file = new File(path + relativePath);
 		try {
 			FileUtils.copyInputStreamToFile(inputStream, file);
-			filePath = file.getPath();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		return filePath;
+		return relativePath;
 	}
 	
 	private static String getSuffix(String fileName) {

@@ -67,12 +67,14 @@ public class SpeexUtils {
 				try {
 					in.close();
 				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 			if(out != null) {
 				try {
 					out.close();
 				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 		}

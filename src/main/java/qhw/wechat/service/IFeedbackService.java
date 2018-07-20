@@ -29,4 +29,6 @@ public interface IFeedbackService {
 	
 	int selectTotolNum(Map<String, Object> params);
 	List<Map<String, Object>> selectByPage(Map<String, Object> params);
+	
+	List<Map<String, Object>> selectBySugg(Integer suggestionid);
 }

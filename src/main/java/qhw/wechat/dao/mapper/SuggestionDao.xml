@@ -33,6 +33,7 @@
 	<select id="selectTotolNum" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(1) FROM meten_suggestion 
 		WHERE isFeedback= 0
+		<if test="userid != null"> AND userid = #{userid}</if>
 		<if test="title != null"> AND title LIKE CONCAT('%', #{title}, '%')</if>
 		<if test="content != null"> AND content LIKE CONCAT('%', #{content}, '%')</if>
 		<if test="startDate != null"> AND createTime $gt;= #{startDate}</if>
@@ -41,8 +42,10 @@
 	
 	<!-- 查询未回复的建议 (分页)-->
 	<select id="selectByPage" parameterType="hashmap" resultType="qhw.wechat.entity.meten.SuggestionBean">
-		SELECT * FROM meten_suggestion 
+		SELECT * 
+		FROM meten_suggestion 
 		WHERE isFeedback= 0
+		<if test="userid != null"> AND userid = #{userid}</if>
 		<if test="title != null"> AND title LIKE CONCAT('%', #{title}, '%')</if>
 		<if test="content != null"> AND content LIKE CONCAT('%', #{content}, '%')</if>
 		<if test="startDate != null"> AND createTime $gt;= #{startDate}</if>
@@ -53,9 +56,10 @@
 
 	<!-- 查询个人提交的所有建议 -->
 	<select id="selectByUserid" parameterType="_int" resultType="hashmap">
-		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content,f.createTime FROM meten_suggestion s 
+		SELECT u.openid,u.nickname,s.title,s.content,s.img,s.createTime,f.content fcontent,f.createTime fcreateTime
+		FROM meten_suggestion s 
 		LEFT JOIN meten_feedback f ON s.id=f.suggestionid 
-		LEFT JOIN meten_user u ON s.userid=u.id
+		LEFT JOIN meten_user u ON f.userid=u.id
 		WHERE f.userid=#{userid}
 		ORDER BY f.createTime DESC;
 	</select>

@@ -92,10 +92,10 @@ public class JssdkController {
 			String response = HttpUtil.get(url);
 			logger.info("save to local:{}", response);
 			// 解码speex为wav保存到服务器
-			String wavPath = response.substring(0, response.lastIndexOf(".") - 1) + ".wav";
+			String wavPath = response.substring(0, response.lastIndexOf(".")) + ".wav";
 			try {
-				SpeexUtils.decode(response, wavPath);
-				logger.info("decode to file:{}", wavPath);
+				SpeexUtils.decode(System.getProperty("webAppRootKey") + response, System.getProperty("webAppRootKey") + wavPath);
+				logger.info("decode to file:{}", System.getProperty("webAppRootKey") + wavPath);
 				// 保存转码后的文件路径到数据库
 				result.put("wavPath", wavPath);
 				return new Result(MessageConst.MSG_SUCCESS_STATUS, MessageConst.MSG_SUCCESS_SUBMIT, result);

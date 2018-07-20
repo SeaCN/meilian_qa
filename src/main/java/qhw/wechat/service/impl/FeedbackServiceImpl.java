@@ -44,4 +44,10 @@ public class FeedbackServiceImpl implements IFeedbackService {
 		return this.feedbackDao.selectByPage(params);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectBySugg(Integer suggestionid) {
+		// TODO Auto-generated method stub
+		return this.feedbackDao.selectBySugg(suggestionid);
+	}
+
 }

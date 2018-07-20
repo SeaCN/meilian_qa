@@ -187,14 +187,15 @@ public class SuggestionController {
 			@RequestParam(required=false) String content,
 			@RequestParam(required=false) Date startDate,
 			@RequestParam(required=false) Date endDate){
-		try {
-			Thread.currentThread().sleep(3000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		Object object = request.getSession().getAttribute("cuser");
+		if (null == object) {
+			logger.error("invalid request without userinfo in session...");
+			return new Result(MessageConst.MSG_FAIL_STATUS, MessageConst.MSG_ERROR);
 		}
+		
 		logger.info("select suggestions which have no feedback...");
 		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("userid", ((UserBean)object).getId());
 		params.put("title", title);
 		params.put("content", content);
 		params.put("startDate", startDate);
